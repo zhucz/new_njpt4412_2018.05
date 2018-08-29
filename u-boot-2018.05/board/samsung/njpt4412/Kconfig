@@ -1,0 +1,12 @@
+if TARGET_NJPT4412
+
+config SYS_BOARD
+	default "njpt4412"
+
+config SYS_VENDOR
+	default "samsung"
+
+config SYS_CONFIG_NAME
+	default "njpt4412"
+
+endif

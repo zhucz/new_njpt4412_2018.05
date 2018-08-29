@@ -1,0 +1,20 @@
+
+#!/bin/bash
+
+#
+# This script will create a u-boot binary for movinand/mmc boot
+#
+
+chmod 777 sdfuse_q -R
+		
+echo "Fuse Landrover trustzone uboot file into SD card"
+cd ./sdfuse_q
+
+if [ -z $1 ]
+then
+	./sd_fusing_exynos4x12.sh /dev/sdb u-boot-njpt4412.bin
+else
+	./sd_fusing_exynos4x12.sh $1 u-boot-njpt4412.bin
+fi
+
+cd ..
