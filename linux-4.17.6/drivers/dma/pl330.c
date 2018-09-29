@@ -1532,11 +1532,7 @@ static int pl330_update(struct pl330_dmac *pl330)
 		int i = 0;
 		while (i < pl330->pcfg.num_chan) {
 			if (val & (1 << i)) {
-				dev_info(pl330->ddma.dev,
-					"Reset Channel-%d\t CS-%x FTC-%x\n",
-						i, readl(regs + CS(i)),
-						readl(regs + FTC(i)));
-				_stop(&pl330->channels[i]);
+				dev_info(pl330->ddma.dev,"Reset Channel-%d\t CS-%x FTC-%x\n",i, readl(regs + CS(i)),readl(regs + FTC(i)));_stop(&pl330->channels[i]);
 			}
 			i++;
 		}

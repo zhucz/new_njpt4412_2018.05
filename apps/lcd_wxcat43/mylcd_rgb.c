@@ -129,9 +129,14 @@ static void sigint_handler(int dunno)
 */
 
 
-#define RED_COLOR565    0xFF0000
-#define GREEN_COLOR565  0x00FF00
-#define BLUE_COLOR565   0x0000FF
+//#define RED_COLOR565    0xFF0000
+//#define GREEN_COLOR565  0x00FF00
+//#define BLUE_COLOR565   0x0000FF
+
+
+#define RED_COLOR565    0x000000FF
+#define GREEN_COLOR565  0x0000FF00
+#define BLUE_COLOR565   0x00FF0000
 
 int main(int argc, char **argv)
 {
@@ -160,6 +165,7 @@ int main(int argc, char **argv)
 	}
 
 	screen_size = vinfo.xres * vinfo.yres * vinfo.bits_per_pixel / 8;
+//	screen_size = vinfo.xres * vinfo.yres * vinfo.bits_per_pixel / 8;
 	printf("%d-%d, %dbpp, screen_size = %ld\n", vinfo.xres, vinfo.yres, vinfo.bits_per_pixel, screen_size);
 
 	fbp = (uint32_t *)mmap(0, screen_size, PROT_READ | PROT_WRITE, MAP_SHARED, fb, 0);
@@ -167,45 +173,52 @@ int main(int argc, char **argv)
 		printf("mmap return error\n");
 		return -1;
 	}
-	printf("fbp = %d \n",*fbp);  
+	printf("fbp = %p \n",fbp);  
 
 
 	/*------------------------R G B Display-------------------------*/  
 	// Red Screen   
-	printf("%d [vinfo,xres=%d vinfo.yres=%d ]\n",__LINE__,vinfo.xres,vinfo.yres/3);
+//	printf("%d [vinfo,xres=%d vinfo.yres=%d ]\n",__LINE__,vinfo.xres,vinfo.yres);
 	for(y = 0; y < vinfo.yres/3;  y++){ 
 		for(x = 0; x < vinfo.xres ; x++){  
 			*(fbp + y * vinfo.xres + x) = RED_COLOR565;  
 		}  
+
+//		printf("fbp for r= %p \n",(fbp + y * vinfo.xres));  
 	}  
 //	printf("%d *(fbp+y*vinfo.xres+x) = %d \n",*(fbp + y * vinfo.xres + x));
 	printf("Red Screen\n");  
 
 
+#if 1
 	// Green Screen   
-	printf("%d [vinfo,yres=%d vinfo.yres=%d ]\n",__LINE__,vinfo.yres/3,(vinfo.yres*2)/3);
+//	printf("%d [vinfo,yres=%d vinfo.yres=%d ]\n",__LINE__,vinfo.yres/3,(vinfo.yres*2)/3);
 
-	for(y = vinfo.yres/3; y < (vinfo.yres*2)/3; y++){  
+	for(y = vinfo.yres/3; y < (vinfo.yres*2 / 3); y++){  
 		for(x = 0; x < vinfo.xres; x++){  
 			*(fbp + y * vinfo.xres + x) =GREEN_COLOR565;  
 		}  
+
+//		printf("fbp for g= %p \n",(fbp + y * vinfo.xres));  
 	}
 //	printf("%d *(fbp+y*vinfo.xres+x) = %d \n",*(fbp+y*vinfo.xres+x));
+
 
 	printf("Green Screen\n");  
 
 	// Blue Screen   
-	printf("%d [vinfo,yres=%d vinfo.yres=%d ]\n",__LINE__,(vinfo.yres*2)/3,vinfo.yres);
-	for(y = (vinfo.yres*2)/3; y < vinfo.yres; y++){  
+//	printf("%d [vinfo,yres=%d vinfo.yres=%d ]\n",__LINE__,(vinfo.yres*2)/3,vinfo.yres);
+	for(y = (vinfo.yres * 2 / 3); y < vinfo.yres; y++){  
 		for(x = 0; x < vinfo.xres; x++){  
 			*(fbp + y * vinfo.xres + x) = BLUE_COLOR565;  
 		}  
+//		printf("fbp for b= %p \n",(fbp + y * vinfo.xres));  
 	}  
 //	printf("%d *(fbp+y*vinfo.xres+x) = %d \n",*(fbp+y*vinfo.xres+x));
 	printf("Blue Screen\n");  
 	/*--------------------------------------------------------------*/  
-	
-	sleep(3);
+#endif
+
 	munmap(fbp, screen_size);
 	close(fb);
 

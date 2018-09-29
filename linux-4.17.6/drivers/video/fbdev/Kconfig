@@ -469,8 +469,7 @@ config FB_FM2
 
 
 config FB_NJPT4412
-	bool "Njpt4412 LCD 4.3 RGB 480 * 272"
-	default y
+	tristate "Njpt4412 LCD 4.3 RGB 480 * 272"
 	help
 	  Frame buffer driver for the built-in FB controller in the Samsung
 	  SoC line from the exynos4 onwards, including the EXYNOS4412, EXYNOS4418,

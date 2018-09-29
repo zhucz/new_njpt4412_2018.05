@@ -1051,6 +1051,12 @@ static int soc_bind_dai_link(struct snd_soc_card *card,
 	int i;
 
 	dev_dbg(card->dev, "ASoC: binding %s\n", dai_link->name);
+	printk("ASoC: name :%s\n", dai_link->name);
+	printk("ASoC: stream_name :%s    zhuchengzhi \n", dai_link->stream_name);
+	printk("ASoC: cpu_dai_name :%s   zhuchengzhi \n", dai_link->cpu_dai_name);
+	printk("ASoC: codec_dai_name :%s zhuchengzhi \n", dai_link->codec_dai_name);
+	printk("ASoC: platform_name :%s  zhuchengzhi \n", dai_link->platform_name);
+	printk("ASoC: codec_name :%s     zhuchengzhi \n", dai_link->codec_name);
 
 	if (soc_is_dai_link_bound(card, dai_link)) {
 		dev_dbg(card->dev, "ASoC: dai link %s already bound\n",
@@ -1071,14 +1077,19 @@ static int soc_bind_dai_link(struct snd_soc_card *card,
 			 dai_link->cpu_dai_name);
 		goto _err_defer;
 	}
+	printk("ASoC: CPU DAI %s registered ok zhuchengzhi\n", dai_link->cpu_dai_name);
+
 	snd_soc_rtdcom_add(rtd, rtd->cpu_dai->component);
 
 	rtd->num_codecs = dai_link->num_codecs;
 
 	/* Find CODEC from registered CODECs */
 	codec_dais = rtd->codec_dais;
+
+	printk("%d rtd->num_codecs = %d ---------- \n",__LINE__,rtd->num_codecs);
 	for (i = 0; i < rtd->num_codecs; i++) {
 		codec_dais[i] = snd_soc_find_dai(&codecs[i]);
+
 		if (!codec_dais[i]) {
 			dev_err(card->dev, "ASoC: CODEC DAI %s not registered\n",
 				codecs[i].dai_name);
@@ -1281,6 +1292,7 @@ static int soc_init_dai_link(struct snd_soc_card *card,
 				link->name);
 			return -EINVAL;
 		}
+
 		/* Codec DAI name must be specified */
 		if (!link->codecs[i].dai_name) {
 			dev_err(card->dev, "ASoC: codec_dai_name not set for %s\n",
@@ -2905,6 +2917,7 @@ int snd_soc_register_card(struct snd_soc_card *card)
 	if (!card->name || !card->dev)
 		return -EINVAL;
 
+	printk("%d card->num_links = %d .........  \n",__LINE__,card->num_links);
 	for (i = 0; i < card->num_links; i++) {
 		struct snd_soc_dai_link *link = &card->dai_link[i];
 

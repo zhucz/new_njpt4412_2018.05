@@ -198,6 +198,8 @@ static int pwm_probe(struct platform_device *pdev) {
     cls = class_create(THIS_MODULE, "mypwm");
     device_create(cls, NULL, MKDEV(major, 0), NULL, "mypwm1"); 
 
+    beep_on();  
+
 error:
     unregister_chrdev_region(MKDEV(major, 0), 1);
     return 0;

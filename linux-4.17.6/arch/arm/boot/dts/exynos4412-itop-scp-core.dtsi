@@ -26,7 +26,9 @@
 /*	firmware@203f000 {
 		compatible = "samsung,secure-firmware";
 		reg = <0x0203F000 0x1000>;
-	}; */
+	}; 
+ 
+*/
 
 	fixed-rate-clocks {
 		xxti {
@@ -123,7 +125,7 @@
 	samsung,i2c-max-bus-freq = <400000>;
 	pinctrl-0 = <&i2c1_bus>;
 	pinctrl-names = "default";
-//	status = "okay";
+	status = "okay";
 
 	s5m8767: s5m8767-pmic@66 {
 		compatible = "samsung,s5m8767-pmic";

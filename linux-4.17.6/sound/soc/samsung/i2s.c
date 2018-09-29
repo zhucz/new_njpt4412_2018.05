@@ -1541,6 +1541,9 @@ static const struct of_device_id exynos_i2s_match[] = {
 		.compatible = "samsung,s5pv210-i2s",
 		.data = &i2sv5_dai_type,
 	}, {
+		.compatible = "samsung,exynos4412-i2s", /*add by zhuchengzhi 2018-09-17 */
+		.data = &i2sv5_dai_type,
+	}, {
 		.compatible = "samsung,exynos5420-i2s",
 		.data = &i2sv6_dai_type,
 	}, {

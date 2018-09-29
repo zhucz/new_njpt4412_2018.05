@@ -49,6 +49,8 @@
 //		njpt4412,int_gpio1 = <&gpk1 1 GPIO_ACTIVE_HIGH>;
 		njpt4412,int_gpio1 = <&gpl0 4 GPIO_ACTIVE_HIGH>;
 		njpt4412,ini_gpio2 = <&gpl2 0 GPIO_ACTIVE_HIGH>;
+//		njpt4412,ini_gpio3 = <&gpc0 2 GPIO_ACTIVE_HIGH>;
+//		njpt4412,ini_gpio4 = <&gpl1 0 GPIO_ACTIVE_HIGH>;
 	};
 
 //	backlight_demo@139D0000{
@@ -111,6 +113,7 @@
 		};
 	};
 
+// /*********************************************************
 	sound {
 		compatible = "simple-audio-card";
 		simple-audio-card,name = "wm-sound";
@@ -147,6 +150,50 @@
 			system-clock-frequency = <11289600>;
 		};
 	};
+// ***********************************************************/
+
+ /* *********************************************************	
+	sound {
+		compatible = "samsung,njpt4412-wm8960";
+		samsung,i2s-controller = <&i2s0>;
+		samsung,audio-codec = <&codec>;
+		samsung,name = "wm-sound";
+
+		samsung-audio-card,format = "i2s";
+		samsung-audio-card,bitclock-master = <&link0_codec>;
+		samsung-audio-card,frame-master = <&link0_codec>;
+
+		samsung-audio-card,widgets =
+			"Microphone", "Mic Jack",
+			"Line", "Line In",
+			"Line", "Line Out",
+			"Speaker", "Speaker",
+			"Headphone", "Headphone Jack";
+		samsung-audio-card,routing =
+			"Headphone Jack", "HP_L",
+			"Headphone Jack", "HP_R",
+			"Speaker", "SPK_LP",
+			"Speaker", "SPK_LN",
+			"Speaker", "SPK_RP",
+			"Speaker", "SPK_RN",
+			"LINPUT1", "Mic Jack",
+			"LINPUT3", "Mic Jack",
+			"RINPUT1", "Mic Jack",
+			"RINPUT2", "Mic Jack";
+
+		samsung-audio-card,cpu {
+			sound-dai = <&i2s0 0>;
+		};
+
+		link0_codec: samsung-audio-card,codec {
+			sound-dai = <&codec>;
+			clocks = <&i2s0 CLK_I2S_CDCLK>;
+			system-clock-frequency = <11289600>;
+		};
+	};
+  ******************************************************************* */
+
+
 
 	beep {
 		compatible = "pwm-beeper";
@@ -166,33 +213,33 @@
 
 	lcd_demo@11C00000{
 		compatible = "njpt4412,lcd_demo";
-		reg = <0x11C00000 0x20C0 0x10010210 0x08 0x10023C80 0x04 0x1003C000 0x1000>;
+		reg = <0x11C00000 	0x20C0  		/*res1 VIDW0nADD0Bn  		*/
+			   0x10010210 	0x08   			/*res2 LCDBLK_CFG 			*/
+			   0x10023C80 	0x04    		/*res3 LCD0_CONFIGURATION	*/
+			   0x1003C000 	0x1000 			/*res4 Selects Clock Source for xxx */
+			   0x11400180 	0x04 			/*res5 GPF0CON */
+			   0x114001A0 	0x04 			/*res6 GPF1CON */
+			   0x114001C0 	0x04 			/*res7 GPF2CON */
+			   0x114001E0 	0x04			/*res8 GPF3CON */
+			   0x11400060   0x14			/*res9  GPC0CON*/
+		       0x110000E0   0x14>;			/*res10 GPL1CON*/
+
+
 		pinctrl-names = "default";
 		pinctrl-0 = <&lcd_demo>;
-		clocks = <&clock CLK_FIMD0 &clock CLK_ACLK160>;
-		clock-names = "fimd0","ackl160";
+		clocks = <&clock CLK_FIMD0 &clock CLK_ACLK160 &clock CLK_MOUT_MPLL_USER_T &clock CLK_SCLK_FIMD0>;
+		clock-names = "fimd0","aclk160","lcd_user_t","sclk_clk_fimd0";
 	};
-
-
 };
 
 &pinctrl_1{
 	led_demo:led{
-		samsung,pins = "gpl2-0","gpk1-1";
-		samsung,pin-fnction = <0x3>;
+		samsung,pins = "gpl2-0","gpl0-4";
+		samsung,pin-fnction = <0x1>;
 		samsung,pin-pud = <0x0>;
 		samsung,pin-drv = <0x0>;
 	};
 };
-
-//&pinctrl_0{
-//	backlight_demo:backlight{
-//		samsung,pins = "gpd0-1";
-//		samsung,pin-function = <0x3>;
-//		samsung,pin-pud = <0>;
-//		samsung,pin-drv = <4>;
-//	};
-//};
 
 
 &pinctrl_0{
@@ -207,22 +254,22 @@
         samsung,pins = 	"gpf0-0", "gpf0-1", "gpf0-2", "gpf0-3", "gpf0-4", "gpf0-5", "gpf0-6", "gpf0-7", 
 						"gpf1-0", "gpf1-1", "gpf1-2", "gpf1-3", "gpf1-4", "gpf1-5", "gpf1-6", "gpf1-7", 
 						"gpf2-0", "gpf2-1", "gpf2-2", "gpf2-3", "gpf2-4", "gpf2-5", "gpf2-6", "gpf2-7", 
-						"gpf3-0", "gpf3-1", "gpf3-2", "gpf3-3";
+						"gpf3-0", "gpf3-1", "gpf3-2", "gpf3-3", "gpf3-4", "gpf3-5";
 		samsung,pin-function = <2>;
 		samsung,pin-pud = <0>;
-		samsung,pin-drv = <0>;		 			 
+		samsung,pin-drv = <3>;		 			 
 	};
 };
 
 &adc {
 	vdd-supply = <&ldo3_reg>;
-//	status = "okay";
+	status = "okay";
 };
 
 &camera {
 	pinctrl-0 = <&cam_port_a_clk_active>;
 	pinctrl-names = "default";
-//	status = "okay";
+	status = "okay";
 	assigned-clocks = <&clock CLK_MOUT_CAM0>;
 	assigned-clock-parents = <&clock CLK_XUSBXTI>;
 };
@@ -256,7 +303,7 @@
 };
 
 &fimc_0 {
-//	status = "okay";
+	status = "okay";
 	assigned-clocks = <&clock CLK_MOUT_FIMC0>,
 			<&clock CLK_SCLK_FIMC0>;
 	assigned-clock-parents = <&clock CLK_MOUT_MPLL_USER_T>;
@@ -271,10 +318,10 @@
 &i2c_4 {
 	samsung,i2c-sda-delay = <100>;
 	samsung,i2c-slave-addr = <0x10>;
-	samsung,i2c-max-bus-freq = <100000>;
+	samsung,i2c-max-bus-freq = <400000>;
 	pinctrl-0 = <&i2c4_bus>;
 	pinctrl-names = "default";
-//	status = "okay";
+	status = "okay";
 
 	codec: wm8960@1a {
 		compatible = "wlf,wm8960";
@@ -291,6 +338,31 @@
 	pinctrl-names = "default";
 	status = "okay";
 };
+
+
+&i2c_7 { /*add by zhuchengzhi 2018-09-12 */
+	samsung,i2c-sda-delay = <100>;
+	samsung,i2c-max-bus-freq = <400000>;
+	status = "okay";
+
+	tsc2007:touchscreen@48{
+		compatible = "ti,tsc2007";
+		reg = <0x48>;	
+		interrupt-parent = <&gpx0>;
+		interrupts = <0 IRQ_TYPE_EDGE_FALLING>;
+		gpios = <&gpx0 0 0>;
+		ti,x-plate-ohms = <410>;
+		ti,size-x = <480>;
+		ti,size-y = <272>;
+		ti,fuzz-x = <4>;
+		ti,fuzz-y = <7>;
+		ti,fuzz-pressure = <2>;
+		ti,max-pressure = <2048>;
+	};
+};
+
+
+
 
 &pinctrl_1 {
 	ether-reset {
@@ -319,9 +391,7 @@
 	status = "okay";
 };
 
-&serial_1 {
-// 	status = "okay";
-};
+
 
 &serial_2 {
 	status = "okay";

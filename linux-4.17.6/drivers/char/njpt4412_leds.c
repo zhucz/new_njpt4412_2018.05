@@ -10,12 +10,17 @@
 #include <asm/uaccess.h>
 #include <linux/uaccess.h>
 
+
+
+
+
 #define LED_CNT		2
 
 static int major;
 static struct cdev led_cdev;
 static struct class *cls;
 static int led1,led2;
+static int led3,led4;
 
 
 
@@ -110,6 +115,8 @@ static int led_probe(struct platform_device *pdev)
 
 	led1 = of_get_named_gpio(dev->of_node,"njpt4412,int_gpio1",0);
 	led2 = of_get_named_gpio(dev->of_node,"njpt4412,ini_gpio2",0);
+//	led3 = of_get_named_gpio(dev->of_node,"njpt4412,ini_gpio3",0);
+//	led4 = of_get_named_gpio(dev->of_node,"njpt4412,ini_gpio4",0);
 
 	if(led1 <= 0){
 		printk("%s error \n",__func__);
@@ -117,8 +124,12 @@ static int led_probe(struct platform_device *pdev)
 	}else{
 		printk("led1 %d \n",led1);
 		printk("led2 %d \n",led2);
+//		printk("led3 %d \n",led3);
+//		printk("led4 %d \n",led4);
 		devm_gpio_request_one(dev, led1, GPIOF_OUT_INIT_HIGH, "led1");
 		devm_gpio_request_one(dev, led2, GPIOF_OUT_INIT_HIGH, "led2");
+//		devm_gpio_request_one(dev, led3, GPIOF_OUT_INIT_HIGH, "led3");
+//		devm_gpio_request_one(dev, led4, GPIOF_OUT_INIT_HIGH, "led4");
 	}
 
 	if(alloc_chrdev_region(&devid, 1, LED_CNT, "led") < 0){
@@ -133,9 +144,20 @@ static int led_probe(struct platform_device *pdev)
 	cls = class_create(THIS_MODULE, "led");
 	device_create(cls, NULL, MKDEV(major, 1), NULL, "led0");
 	device_create(cls, NULL, MKDEV(major, 2), NULL, "led1");
+//	device_create(cls, NULL, MKDEV(major, 3), NULL, "led2");
+//	device_create(cls, NULL, MKDEV(major, 4), NULL, "led3");
+
+
+//	gpio_direction_output(led1,1);
+//	gpio_direction_output(led2,1);
+//	gpio_direction_output(led3,1);
+//	gpio_direction_output(led4,1);
+	printk("%d : led   [1------------------4] \n",__LINE__);
+
+
 
 error:
-	unregister_chrdev_region(MKDEV(major, 0), LED_CNT);
+	unregister_chrdev_region(MKDEV(major, 1), LED_CNT);
 	return 0;
 
 }
@@ -144,11 +166,13 @@ error:
 static int led_remove(struct platform_device *pdev)
 {
 	printk("%d : %s \n",__LINE__,__func__);
-	device_destroy(cls, MKDEV(major, 0));
 	device_destroy(cls, MKDEV(major, 1));
+	device_destroy(cls, MKDEV(major, 2));
+//	device_destroy(cls, MKDEV(major, 3));
+//	device_destroy(cls, MKDEV(major, 4));
 
 	class_destroy(cls);
-	unregister_chrdev_region(MKDEV(major, 0), LED_CNT);
+	unregister_chrdev_region(MKDEV(major, 1), LED_CNT);
 	printk("%d : %s \n",__LINE__,__func__);
 
 
