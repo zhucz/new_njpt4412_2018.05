@@ -1,1 +1,1 @@
-cmd_sysklogd/lib.a := rm -f sysklogd/lib.a; arm-linux-gnueabihf-ar  rcs sysklogd/lib.a sysklogd/klogd.o sysklogd/logread.o sysklogd/syslogd_and_logger.o
+cmd_sysklogd/lib.a := rm -f sysklogd/lib.a; /usr/local/gcc-linaro-7.2.1-2017.11-i686_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-ar  rcs sysklogd/lib.a sysklogd/klogd.o sysklogd/logread.o sysklogd/syslogd_and_logger.o

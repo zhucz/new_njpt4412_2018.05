@@ -1,0 +1,12 @@
+#this is run first except when booting in single-user mode
+::sysinit:/etc/init.d/rcS 
+#/bin/sh invocations on selected ttys
+#start an "askfirst" shell on the console (whatever that may be)
+console::askfirst:-/bin/sh
+#stuff to do when restarting the init process
+::restart:/sbin/init
+#stuff to do befor rebooting
+::ctrlaltdel:/sbin/reboot 
+::shutdown::/bin/umount -a -r
+
+

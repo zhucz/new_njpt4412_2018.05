@@ -101,12 +101,12 @@
 
 &bus_peri {
 	devfreq = <&bus_leftbus>;
-//	status = "okay";
+	status = "okay";
 };
 
 &bus_mfc {
 	devfreq = <&bus_leftbus>;
-//	status = "okay";
+	status = "okay";
 };
 
 &cpu0 {
@@ -195,7 +195,11 @@
 
 			ldo5_reg: LDO5 {
 				regulator-name = "VDD_LDO5";
-				op_mode = <0>; /* Always off Mode */
+				regulator-min-microvolt = <1800000>;
+				regulator-max-microvolt = <1800000>;
+				op_mode = <1>; /* Always off Mode */
+				regulator-always-on;
+//				op_mode = <0>; /* Always off Mode */
 			};
 
 			ldo6_reg: LDO6 {
@@ -218,6 +222,7 @@
 				regulator-name = "VDD10_MIPI";
 				regulator-min-microvolt = <1000000>;
 				regulator-max-microvolt = <1000000>;
+				regulator-always-on;
 				op_mode = <1>; /* Normal Mode */
 			};
 
@@ -232,6 +237,7 @@
 				regulator-name = "VDD18_MIPI";
 				regulator-min-microvolt = <1800000>;
 				regulator-max-microvolt = <1800000>;
+				regulator-always-on;
 				op_mode = <1>; /* Normal Mode */
 			};
 
@@ -457,7 +463,7 @@
 };
 
 &mfc {
-//	status = "okay";
+	status = "okay";
 };
 
 &mshc_0 {
@@ -484,12 +490,12 @@
 };
 
 &rtc {
-	status = "okay";
+//	status = "okay";
 	clocks = <&clock CLK_RTC>, <&s5m8767_osc S2MPS11_CLK_AP>;
 	clock-names = "rtc", "rtc_src";
 };
 
 &tmu {
 	vtmu-supply = <&ldo16_reg>;
-//	status = "okay";
+	status = "okay";
 };

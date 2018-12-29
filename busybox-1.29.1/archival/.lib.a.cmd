@@ -1,1 +1,1 @@
-cmd_archival/lib.a := rm -f archival/lib.a; arm-linux-gnueabihf-ar  rcs archival/lib.a archival/bbunzip.o archival/bzip2.o archival/cpio.o archival/dpkg.o archival/dpkg_deb.o archival/gzip.o archival/lzop.o archival/rpm.o archival/tar.o archival/unzip.o
+cmd_archival/lib.a := rm -f archival/lib.a; /usr/local/gcc-linaro-7.2.1-2017.11-i686_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-ar  rcs archival/lib.a archival/bbunzip.o archival/bzip2.o archival/cpio.o archival/dpkg.o archival/dpkg_deb.o archival/gzip.o archival/lzop.o archival/rpm.o archival/tar.o archival/unzip.o

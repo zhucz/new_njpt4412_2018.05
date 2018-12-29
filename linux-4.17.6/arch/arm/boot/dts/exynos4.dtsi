@@ -481,8 +481,8 @@
 			interrupts = <GIC_SPI 54 IRQ_TYPE_LEVEL_HIGH>;
 			clocks = <&clock CLK_UART2>, <&clock CLK_SCLK_UART2>;
 			clock-names = "uart", "clk_uart_baud0";
-			dmas = <&pdma0 17>, <&pdma0 18>;
-			dma-names = "rx", "tx";
+//			dmas = <&pdma0 17>, <&pdma0 18>;
+//			dma-names = "rx", "tx";
 			status = "disabled";
 		};
 

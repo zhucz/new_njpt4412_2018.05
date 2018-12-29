@@ -124,7 +124,7 @@
 #define CONFIG_IPADDR		192.168.1.103
 #define CONFIG_SERVERIP		192.168.1.102 
 #define CONFIG_NETMASK		255.255.255.0
-#define CONFIG_BOOTARGS		"root=/dev/nfs rw nfsroot=192.168.135.128:/home/tigers/nfsroot/rootfs ip=192.168.1.103 init=/linuxrc console=ttySAC2,115200 earlyprintk"
+#define CONFIG_BOOTARGS		"root=/dev/nfs rw nfsroot=192.168.1.104:/home/tigers/nfsroot/rootfs ip=192.168.1.103 init=/linuxrc console=ttySAC2,115200 earlyprintk"
 #define CONFIG_BOOTCOMMAND	"usb start;tftpboot 41000000 uImage;tftpboot 42000000 exynos4412-itop-elite.dtb;bootm 41000000 - 42000000"
 
 

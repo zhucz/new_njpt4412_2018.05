@@ -1,0 +1,22 @@
+#!/bin/sh 
+
+#this is the first script called by init process
+/bin/mount -a
+
+
+/sbin/mdev>/proc/sys/kernel/hotplug 
+
+/sbin/mdev -s
+
+#mdev -s
+
+#./bin/beeps &
+#./bin/mylcd_rgb &
+
+#insmod /bin/njpt4412-bl.ko
+#./bin/mylcd_lp & 
+
+
+
+
+

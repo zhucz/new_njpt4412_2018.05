@@ -1,1 +1,1 @@
-cmd_runit/lib.a := rm -f runit/lib.a; arm-linux-gnueabihf-ar  rcs runit/lib.a runit/chpst.o runit/runsv.o runit/runsvdir.o runit/sv.o runit/svlogd.o
+cmd_runit/lib.a := rm -f runit/lib.a; /usr/local/gcc-linaro-7.2.1-2017.11-i686_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-ar  rcs runit/lib.a runit/chpst.o runit/runsv.o runit/runsvdir.o runit/sv.o runit/svlogd.o

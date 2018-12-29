@@ -1,1 +1,1 @@
-cmd_util-linux/volume_id/built-in.o :=  rm -f util-linux/volume_id/built-in.o; arm-linux-gnueabihf-ar rcs util-linux/volume_id/built-in.o
+cmd_util-linux/volume_id/built-in.o :=  rm -f util-linux/volume_id/built-in.o; /usr/local/gcc-linaro-7.2.1-2017.11-i686_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-ar rcs util-linux/volume_id/built-in.o

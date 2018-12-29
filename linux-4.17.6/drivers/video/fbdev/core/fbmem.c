@@ -1920,7 +1920,8 @@ fbmem_exit(void)
 module_exit(fbmem_exit);
 MODULE_LICENSE("GPL");
 MODULE_DESCRIPTION("Framebuffer base");
-#else
+#else  
+//device_initcall(fbmem_init);
 subsys_initcall(fbmem_init);
 #endif
 

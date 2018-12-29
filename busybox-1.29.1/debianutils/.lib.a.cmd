@@ -1,1 +1,1 @@
-cmd_debianutils/lib.a := rm -f debianutils/lib.a; arm-linux-gnueabihf-ar  rcs debianutils/lib.a debianutils/pipe_progress.o debianutils/run_parts.o debianutils/start_stop_daemon.o debianutils/which.o
+cmd_debianutils/lib.a := rm -f debianutils/lib.a; /usr/local/gcc-linaro-7.2.1-2017.11-i686_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-ar  rcs debianutils/lib.a debianutils/pipe_progress.o debianutils/run_parts.o debianutils/start_stop_daemon.o debianutils/which.o

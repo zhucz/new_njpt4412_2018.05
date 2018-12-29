@@ -1080,6 +1080,8 @@ s3c24xx_i2c_parse_dt(struct device_node *np, struct s3c24xx_i2c *i2c)
 	if (IS_ERR(i2c->sysreg))
 		return;
 
+	printk("########## %d : %s id = %#x",__LINE__,__func__,id);
+
 	regmap_update_bits(i2c->sysreg, EXYNOS5_SYS_I2C_CFG, BIT(id), 0);
 }
 #else

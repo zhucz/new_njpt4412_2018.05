@@ -28,6 +28,8 @@
 
 #include "wm8960.h"
 
+
+
 /* R25 - Power 1 */
 #define WM8960_VMID_MASK 0x180
 #define WM8960_VREF      0x40
@@ -1179,8 +1181,10 @@ static int pll_factors(unsigned int source, unsigned int target,
 	pll_div->k = K;
 
 	pr_debug("WM8960 PLL: N=%x K=%x pre_div=%d\n",
-		 pll_div->n, pll_div->k, pll_div->pre_div);
+		 pll_div->n, pll_div->k, pll_div->pre_div); 
 
+	printk("WM8960 PLL: N=%x K=%x pre_div=%d\n",
+		 pll_div->n, pll_div->k, pll_div->pre_div);
 	return 0;
 }
 
@@ -1401,9 +1405,7 @@ static int wm8960_i2c_probe(struct i2c_client *i2c,
 	struct wm8960_priv *wm8960;
 	int ret;
 
-	printk("%d : %s ************************\n",__LINE__,__func__);
-	wm8960 = devm_kzalloc(&i2c->dev, sizeof(struct wm8960_priv),
-			      GFP_KERNEL);
+	wm8960 = devm_kzalloc(&i2c->dev, sizeof(struct wm8960_priv), GFP_KERNEL);
 	if (wm8960 == NULL)
 		return -ENOMEM;
 
@@ -1412,6 +1414,8 @@ static int wm8960_i2c_probe(struct i2c_client *i2c,
 		if (PTR_ERR(wm8960->mclk) == -EPROBE_DEFER)
 			return -EPROBE_DEFER;
 	}
+//	printk("%d : %s wm8960->mclk = %ld \n",__LINE__,__func__,clk_get_rate(wm8960->mclk));
+//	printk("%d : %s wm8960_mclk: = %p \n",__LINE__,__func__, wm8960->mclk);
 
 	wm8960->regmap = devm_regmap_init_i2c(i2c, &wm8960_regmap);
 	if (IS_ERR(wm8960->regmap))
@@ -1470,6 +1474,7 @@ static int wm8960_i2c_probe(struct i2c_client *i2c,
     regmap_update_bits(wm8960->regmap, WM8960_CLASSD3, 0x1a, 0x12);  
     regmap_update_bits(wm8960->regmap, WM8960_CLASSD1, 0xc0, 0xc0);  
 /*end*/
+
 
 	i2c_set_clientdata(i2c, wm8960);
 

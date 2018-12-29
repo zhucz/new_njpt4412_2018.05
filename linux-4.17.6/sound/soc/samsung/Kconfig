@@ -68,15 +68,15 @@ config SND_SOC_SAMSUNG_SMDK_WM8994
 
 
 #add by zhuchengzhi 2018-09-14
-#config SND_SOC_SAMSUNG_NJPT4412_WM8960
-#	tristate "SoC I2S Audio support for WM8960 on NJPT4412"
-#	depends on SND_SOC_SAMSUNG=y
-#	depends on I2C=y
-#	select SND_SOC_WM8960
-#	select SND_SAMSUNG_I2S
-#	help
-#		Say Y if you want to add support for SoC audio on the NJPT4412s.
-#
+config SND_SOC_SAMSUNG_NJPT4412_WM8960
+	tristate "SoC I2S Audio support for WM8960 on NJPT4412"
+	depends on SND_SOC_SAMSUNG=y
+	depends on I2C=y
+	select SND_SOC_WM8960
+	select SND_SAMSUNG_I2S
+	help
+		Say Y if you want to add support for SoC audio on the NJPT4412s.
+
 #endif
 
 

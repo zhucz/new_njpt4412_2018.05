@@ -31,7 +31,7 @@ snd-soc-smdk-wm8580-objs := smdk_wm8580.o
 snd-soc-smdk-wm8994-objs := smdk_wm8994.o
 
 # add by zhuchengzhi 2018-09-14
-# snd-soc-njpt4412-wm8960-objs := njpt4412_wm8960.o
+snd-soc-njpt4412-wm8960-objs := njpt4412_wm8960.o
 # endif
 
 snd-soc-snow-objs := snow.o
@@ -59,7 +59,7 @@ obj-$(CONFIG_SND_SOC_SAMSUNG_SMDK_WM8580) += snd-soc-smdk-wm8580.o
 obj-$(CONFIG_SND_SOC_SAMSUNG_SMDK_WM8994) += snd-soc-smdk-wm8994.o
 
 # add by zhuchengzhi 2018-09-14
-# obj-$(CONFIG_SND_SOC_SAMSUNG_NJPT4412_WM8960) += snd-soc-njpt4412-wm8960.o
+obj-$(CONFIG_SND_SOC_SAMSUNG_NJPT4412_WM8960) += snd-soc-njpt4412-wm8960.o
 # endif
 
 obj-$(CONFIG_SND_SOC_SNOW) += snd-soc-snow.o

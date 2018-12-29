@@ -1223,10 +1223,14 @@ static int i2s_register_clock_provider(struct platform_device *pdev)
 			return -ENOMEM;
 	}
 
+
+    printk("%d ########### i2s->addr: %x\n",__LINE__,i2s->addr);  /*add by zhuchengzhi */
+
 	if (!(i2s->quirks & QUIRK_NO_MUXPSR)) {
 		/* Activate the prescaler */
 		u32 val = readl(i2s->addr + I2SPSR);
 		writel(val | PSR_PSREN, i2s->addr + I2SPSR);
+    	printk("%d ########### I2SPSR: %x\n",__LINE__,val);  /*add by zhuchengzhi */
 
 		i2s->clk_table[CLK_I2S_RCLK_SRC] = clk_register_mux(dev,
 				i2s_clk_name[CLK_I2S_RCLK_SRC], p_names,
@@ -1274,11 +1278,13 @@ static int samsung_i2s_probe(struct platform_device *pdev)
 	const struct samsung_i2s_dai_data *i2s_dai_data;
 	int ret;
 
+    unsigned int temp; /* add by zhuchengzhi*/
+
+
 	if (IS_ENABLED(CONFIG_OF) && pdev->dev.of_node)
 		i2s_dai_data = of_device_get_match_data(&pdev->dev);
 	else
-		i2s_dai_data = (struct samsung_i2s_dai_data *)
-				platform_get_device_id(pdev)->driver_data;
+		i2s_dai_data = (struct samsung_i2s_dai_data *)platform_get_device_id(pdev)->driver_data;
 
 	pri_dai = i2s_alloc_dai(pdev, i2s_dai_data, false);
 	if (!pri_dai) {
@@ -1303,8 +1309,7 @@ static int samsung_i2s_probe(struct platform_device *pdev)
 		idma_addr = i2s_pdata->type.idma_addr;
 	} else {
 		quirks = i2s_dai_data->quirks;
-		if (of_property_read_u32(np, "samsung,idma-addr",
-					 &idma_addr)) {
+		if (of_property_read_u32(np, "samsung,idma-addr", &idma_addr)) {
 			if (quirks & QUIRK_SUPPORTS_IDMA) {
 				dev_info(&pdev->dev, "idma address is not"\
 						"specified");
@@ -1314,11 +1319,43 @@ static int samsung_i2s_probe(struct platform_device *pdev)
 	quirks &= ~(QUIRK_SEC_DAI | QUIRK_SUPPORTS_IDMA);
 
 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+    printk("%d ###########res: %x\n",__LINE__,(unsigned int)res->start);
+
 	pri_dai->addr = devm_ioremap_resource(&pdev->dev, res);
 	if (IS_ERR(pri_dai->addr))
 		return PTR_ERR(pri_dai->addr);
 
 	regs_base = res->start;
+
+/*--------------------- add by zhuchengzhi -----------------------------*/
+#if 0
+	//I2SCON
+	temp = 0;
+	temp = readl(pri_dai->addr + I2SCON);
+	printk("%d [I2SCON temp = %#x] \n",__LINE__,temp);
+	temp |= ((unsigned)1 << 31) | (1 << 0);
+	writel(temp,pri_dai->addr + I2SCON);
+	printk("%d [I2SCON temp = %#x] \n",__LINE__,temp);
+
+	//I2SPSR
+	temp = 0;
+	temp = readl(pri_dai->addr + I2SPSR);
+	printk("%d [I2SPSR temp = %#x] \n",__LINE__,temp);
+	temp |= (1 << 15) | (5 << 8);
+	writel(temp,pri_dai->addr + I2SPSR);
+	printk("%d [I2SPSR temp = %#x] \n",__LINE__,temp);
+	
+	//I2SMOD
+	temp = 0;
+	temp = readl(pri_dai->addr + I2SMOD);
+	printk("%d [I2SMOD temp = %#x] \n",__LINE__,temp);
+	temp |= (1 << 10) | (1 << 9) | (0 << 8);
+	writel(temp,pri_dai->addr + I2SMOD);
+	printk("%d [I2SMOD temp = %#x] \n",__LINE__,temp);
+#endif
+/*---------------------------- End --------------------------------------*/
+
+    printk("%d ########### regs_base: %x\n",__LINE__,regs_base);
 
 	pri_dai->clk = devm_clk_get(&pdev->dev, "iis");
 	if (IS_ERR(pri_dai->clk)) {
@@ -1331,6 +1368,10 @@ static int samsung_i2s_probe(struct platform_device *pdev)
 		dev_err(&pdev->dev, "failed to enable clock: %d\n", ret);
 		return ret;
 	}
+
+	printk("%d ########### pri_dai->clk: = %ld \n",__LINE__,clk_get_rate(pri_dai->clk));
+
+
 	pri_dai->dma_playback.addr = regs_base + I2STXD;
 	pri_dai->dma_capture.addr = regs_base + I2SRXD;
 	pri_dai->dma_playback.chan_name = "tx";
@@ -1408,6 +1449,8 @@ static int samsung_i2s_probe(struct platform_device *pdev)
 		goto err_disable_pm;
 
 	pri_dai->op_clk = clk_get_parent(pri_dai->clk_table[CLK_I2S_RCLK_SRC]);
+
+	printk("%d ########### pri_dai->op_clk: = %ld \n",__LINE__,clk_get_rate(pri_dai->op_clk));
 
 	return 0;
 

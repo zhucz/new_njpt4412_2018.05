@@ -165,27 +165,7 @@ static int lcd_probe(struct platform_device *pdev)
     struct device *dev = &pdev->dev;
 
 	volatile unsigned int *lcd0_configuration;
-#if 0
-	struct device *dev = &pdev->dev;
-	struct pinctrl *pctrl;
-	struct pinctrl_state *pstate;
 
-
-	pctrl = devm_pinctrl_get(dev);
-	if(pctrl == NULL){
-		printk("devm_pinctrl_get error \n");
-	}
-	pstate = pinctrl_lookup_state(pctrl,"lcd_demo");
-
-	if(pstate == NULL){
-		printk("pinctrl_lookup_state error \n");
-	}
-
-	pinctrl_select_state(pctrl,pstate);
-
-	printk("%d lcd gpio configure \n",__LINE__);
-
-#endif
 
 
     /* 1. 分配一个fb_info */
@@ -820,6 +800,7 @@ static int lcd_probe(struct platform_device *pdev)
 
     printk("platform_get_resource ok..........[done] \n");
 	printk("======================================================= \n");
+
     return ret;
 }
 

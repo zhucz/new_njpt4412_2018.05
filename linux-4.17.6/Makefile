@@ -324,7 +324,8 @@ SUBARCH := $(shell uname -m | sed -e s/i.86/x86/ -e s/x86_64/x86/ \
 # CROSS_COMPILE	?= $(CONFIG_CROSS_COMPILE:"%"=%)
 
 ARCH		?= arm
-CROSS_COMPILE	?= arm-none-linux-gnueabi-
+CROSS_COMPILE	?=/usr/local/gcc-linaro-7.2.1-2017.11-i686_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-
+#CROSS_COMPILE	?= arm-none-linux-gnueabi-
 
 
 # Architecture as present in compile.h

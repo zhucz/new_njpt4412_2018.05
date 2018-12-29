@@ -1,1 +1,1 @@
-cmd_findutils/lib.a := rm -f findutils/lib.a; arm-linux-gnueabihf-ar  rcs findutils/lib.a findutils/find.o findutils/grep.o findutils/xargs.o
+cmd_findutils/lib.a := rm -f findutils/lib.a; /usr/local/gcc-linaro-7.2.1-2017.11-i686_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-ar  rcs findutils/lib.a findutils/find.o findutils/grep.o findutils/xargs.o

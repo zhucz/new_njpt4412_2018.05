@@ -1,1 +1,1 @@
-cmd_klibc-utils/lib.a := rm -f klibc-utils/lib.a; arm-linux-gnueabihf-ar  rcs klibc-utils/lib.a klibc-utils/nuke.o klibc-utils/resume.o
+cmd_klibc-utils/lib.a := rm -f klibc-utils/lib.a; /usr/local/gcc-linaro-7.2.1-2017.11-i686_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-ar  rcs klibc-utils/lib.a klibc-utils/nuke.o klibc-utils/resume.o

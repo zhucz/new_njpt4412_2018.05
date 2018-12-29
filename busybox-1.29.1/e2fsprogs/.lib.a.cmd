@@ -1,1 +1,1 @@
-cmd_e2fsprogs/lib.a := rm -f e2fsprogs/lib.a; arm-linux-gnueabihf-ar  rcs e2fsprogs/lib.a e2fsprogs/chattr.o e2fsprogs/e2fs_lib.o e2fsprogs/fsck.o e2fsprogs/lsattr.o
+cmd_e2fsprogs/lib.a := rm -f e2fsprogs/lib.a; /usr/local/gcc-linaro-7.2.1-2017.11-i686_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-ar  rcs e2fsprogs/lib.a e2fsprogs/chattr.o e2fsprogs/e2fs_lib.o e2fsprogs/fsck.o e2fsprogs/lsattr.o

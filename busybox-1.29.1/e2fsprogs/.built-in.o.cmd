@@ -1,1 +1,1 @@
-cmd_e2fsprogs/built-in.o :=  rm -f e2fsprogs/built-in.o; arm-linux-gnueabihf-ar rcs e2fsprogs/built-in.o
+cmd_e2fsprogs/built-in.o :=  rm -f e2fsprogs/built-in.o; /usr/local/gcc-linaro-7.2.1-2017.11-i686_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-ar rcs e2fsprogs/built-in.o
